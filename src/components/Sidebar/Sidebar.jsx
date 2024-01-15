@@ -27,7 +27,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="w-full h-full border-r-[1px] border-neutral-100 flex flex-col justify-between py-4 pb-[60px] px-6">
+    <div className="w-[max-content] px-[50px] h-full border-r-[1px] border-neutral-100 flex flex-col justify-between py-4 pb-[60px]">
       <div className=" flex flex-col gap-[60px] h-[70%]">
         {" "}
         <p className="text-[36px]">Vega</p>{" "}

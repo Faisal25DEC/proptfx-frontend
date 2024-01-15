@@ -1,4 +1,17 @@
 import React, { useEffect, useState } from "react";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  EffectFade,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/bundle";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { baseUrl } from "../../utils/config";
@@ -20,29 +33,89 @@ const Home = () => {
     };
     fetchMovies();
   }, []);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (movies) {
+      setTrendingMovies(
+        [...movies]
+          .sort((a, b) => b.popularity - a.popularity)
+          .filter((item) => item.popularity > 90)
+      );
+    }
+  }, [movies]);
   return (
-    <div className="py-2 px-4 h-full w-full  flex ">
+    <div className="py-2 h-full w-full px-4  flex ">
       <div className="flex-[9.5] overflow-scroll overflow-x-hidden ">
         <Navbar />
         <div className="pt-6">
           <p className="text-[36px]">Trending</p>
+          <Swiper
+            id="testimonials"
+            style={{
+              "--swiper-pagination-color": "#00d6ce",
+              "--swiper-pagination-bullet-inactive-color": "#00d6ce",
+              "--swiper-pagination-bullet-inactive-opacity": "1",
+              "--swiper-pagination-bullet-width": "9px",
+              "--swiper-pagination-bullet-size": "8px",
+              "--swiper-pagination-bullet-horizontal-gap": "2px",
+              width: "100%",
+              margin: "auto",
+              paddingTop: "25px",
+              paddingRight: "10px",
+            }}
+            modules={[Navigation, Pagination, Scrollbar, A11y, EffectFade]}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: true,
+            }}
+            pagination={{ clickable: true }}
+            breakpoints={{
+              500: {
+                slidesPerView: 1,
+                slidesPerGroup: 1,
+                delay: 1000,
+                spaceBetween: 10,
+              },
+
+              1224: {
+                slidesPerView: 2,
+                slidesPerGroup: 1,
+                delay: 1000,
+                spaceBetween: 20,
+              },
+            }}
+          >
+            {trendingMovies?.map((item) => {
+              return (
+                <SwiperSlide style={{ height: "400px" }}>
+                  <div className="flex flex-col">
+                    <div className="">
+                      <img
+                        src={item.backdrop_path}
+                        alt=""
+                        className="w-full h-[340px] object-cover rounded-lg"
+                      />
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
-        <div className="pt-4">
+        <div className="pt-4 w-[99%] m-auto">
           <p className="text-[36px]">Movies</p>
-          <div className="grid grid-cols-4 gap-8 py-8 ">
+          <div className="grid grid-cols-4 gap-6 py-8 ">
             {movies?.map((item, idx) => {
               return (
                 <div
-                  className="flex flex-col cursor-pointer relative movie-detail-drawer"
+                  className="flex w-full flex-col cursor-pointer relative movie-detail-drawer"
                   onMouseEnter={() => setShowMovieDetails(idx)}
                   onMouseLeave={() => setShowMovieDetails(false)}
                 >
-                  <div>
+                  <div className="w-full">
                     <img
                       src={`${item.poster_path}`}
                       alt=""
-                      className="h-[350px] min-w-[240px] object-cover rounded-md"
+                      className="h-[350px] w-full object-cover rounded-md"
                     />
                   </div>
                   <div
