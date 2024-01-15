@@ -1,8 +1,18 @@
 import React from "react";
-import { FaClock, FaHome, FaRocket, FaStar } from "react-icons/fa";
+import {
+  FaClock,
+  FaHome,
+  FaPlusCircle,
+  FaRocket,
+  FaStar,
+} from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/userSlice";
 const Sidebar = () => {
+  const { auth } = useSelector((store) => store.user);
   const location = useLocation();
+  const dispatch = useDispatch();
   const currentPath = location.pathname;
   const sidebarLinks = [
     {
@@ -24,6 +34,11 @@ const Sidebar = () => {
       title: "Top Rated",
       path: "/top-rated",
       icon: FaStar,
+    },
+    {
+      title: "Add a Movie",
+      path: "/add-movie",
+      icon: FaPlusCircle,
     },
   ];
   return (
@@ -52,7 +67,19 @@ const Sidebar = () => {
       </div>
 
       <div className="text-red-500 pl-[20px]">
-        <p>Login</p>
+        {auth ? (
+          <Link
+            onClick={() => {
+              dispatch(logout());
+            }}
+          >
+            <p>Logout</p>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <p>Login</p>
+          </Link>
+        )}
       </div>
     </div>
   );

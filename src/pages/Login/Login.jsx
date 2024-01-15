@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { signupUser } from "../../store/userSlice";
-import { Link } from "react-router-dom";
+import { loginUser } from "../../store/userSlice";
+import { Navigate } from "react-router-dom";
 
 const initialFormData = {
-  name: "",
   email: "",
   password: "",
-  confirmPassword: "",
-  role: "user",
 };
-const SignUp = () => {
-  const { auth, signup } = useSelector((store) => store.user);
+
+const Login = () => {
+  const { auth } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialFormData);
   const handleFormFieldChange = (e) => {
@@ -22,12 +20,15 @@ const SignUp = () => {
     });
   };
   const handleSubmit = () => {
-    dispatch(signupUser(formData));
+    dispatch(loginUser(formData));
   };
-
+  console.log(formData);
+  if (auth) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="flex flex-col gap-[25px] justify-center items-center h-full w-full">
-      <h1 className="text-[24px]">Register To Vega </h1>
+      <h1 className="text-[24px]">Login To Vega </h1>
       <form
         action=""
         className="flex flex-col w-[30%] gap-[15px]"
@@ -36,14 +37,6 @@ const SignUp = () => {
           handleSubmit();
         }}
       >
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          id=""
-          className="py-2 px-4 bg-neutral-800 rounded-md"
-          onChange={handleFormFieldChange}
-        />
         <input
           type="email"
           name="email"
@@ -58,13 +51,7 @@ const SignUp = () => {
           className="py-2 px-4 bg-neutral-800 rounded-md"
           onChange={handleFormFieldChange}
         />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          className="py-2 px-4 bg-neutral-800 rounded-md"
-          onChange={handleFormFieldChange}
-        />
+
         <button
           type="submit"
           className="bg-red-500 rounded-md font-semibold text-[20px] border-none py-2 px-4"
@@ -72,16 +59,14 @@ const SignUp = () => {
           Submit
         </button>
         <p className="text-center">
-          Already Have an Account?{" "}
-          <Link to="/login">
-            <span className="text-red-400 underline cursor-pointer">
-              Login Here
-            </span>
-          </Link>
+          Don't Have an Account?{" "}
+          <span className="text-red-400 underline cursor-pointer">
+            Register Here
+          </span>
         </p>
       </form>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;

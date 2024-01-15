@@ -13,26 +13,37 @@ import "swiper/css/bundle";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Navbar from "../../components/Navbar/Navbar";
-import axios from "axios";
-import { baseUrl } from "../../utils/config";
-import { FaClock } from "react-icons/fa";
+
+import { FaClock, FaWindowClose } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { getCurrentUser } from "../../store/userSlice";
+import {
+  getAllMovies,
+  removeFromWatchlist,
+  updateWatchlist,
+} from "../../store/movieSlice";
+import { checkWatchlist } from "../../utils/movies";
 
 const Home = () => {
-  const [movies, setMovies] = useState(null);
+  const { currentUser, auth } = useSelector((store) => store.user);
+  const { movies, moviesPending, moviesError } = useSelector(
+    (store) => store.movies
+  );
+  const [jwtToken, setJWTToken] = useState(null);
+  const dispatch = useDispatch();
+
   const [trendingMovies, setTrendingMovies] = useState(null);
   const [showMovieDetail, setShowMovieDetails] = useState(null);
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const res = await axios.get(`${baseUrl}/movies`);
-        console.log(res);
-        setMovies(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchMovies();
-  }, []);
+    const token = JSON.parse(localStorage.getItem("movie_token"));
+    if (token) {
+      setJWTToken(token);
+      dispatch(getCurrentUser(token));
+    }
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllMovies());
+  }, [dispatch]);
   useEffect(() => {
     if (movies) {
       setTrendingMovies(
@@ -127,7 +138,47 @@ const Home = () => {
                     <p>{item.release_date}</p>
                     <div className="pt-4">
                       <button className="flex gap-[5px] items-center text-red-400 border-[1px] border-red-400 py-2 px-2 rounded-md">
-                        <FaClock /> Add to Watchlist
+                        {auth && checkWatchlist(currentUser?._id, item) ? (
+                          <div
+                            className="flex items-center gap-[5px]"
+                            onClick={() => {
+                              const token = JSON.parse(
+                                localStorage.getItem("movie_token")
+                              );
+                              if (auth && token) {
+                                dispatch(
+                                  removeFromWatchlist({
+                                    movieId: item._id,
+                                    token,
+                                  })
+                                );
+                              }
+                            }}
+                          >
+                            <FaWindowClose /> Remove from watchlist
+                          </div>
+                        ) : (
+                          <div
+                            className="flex gap-[5px] items-center "
+                            onClick={() => {
+                              const token = JSON.parse(
+                                localStorage.getItem("movie_token")
+                              );
+                              if (auth && token) {
+                                dispatch(
+                                  updateWatchlist({ movieId: item._id, token })
+                                );
+                              }
+                            }}
+                          >
+                            <FaClock /> Add to Watchlist
+                          </div>
+                        )}
+                        {!auth && (
+                          <div className="flex gap-[5px] items-center ">
+                            <FaClock /> Add to Watchlist
+                          </div>
+                        )}
                       </button>
                     </div>
                   </div>
