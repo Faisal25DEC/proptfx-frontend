@@ -44,3 +44,23 @@ code {
 .home {
   flex: 3 !important;
 }
+.ReactTags__tagInputField {
+  padding: 10px 20px;
+  border: solid 1px grey;
+  border-radius: 10px;
+  background-color: transparent;
+  width: 100%;
+  margin-top: 10px;
+}
+.ReactTags__tag {
+  border: solid 1px grey;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+.ReactTags__tag > button {
+  margin-left: 5px;
+  transition: all 0.4s ease;
+}
+.ReactTags__tag > button:hover {
+  scale: 1.5;
+}

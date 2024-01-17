@@ -35,7 +35,7 @@ const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState(null);
   const [showMovieDetail, setShowMovieDetails] = useState(null);
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("movie_token"));
+    const token = JSON.parse(localStorage.getItem("jwt_token"));
     if (token) {
       setJWTToken(token);
       dispatch(getCurrentUser(token));
@@ -143,7 +143,7 @@ const Home = () => {
                             className="flex items-center gap-[5px]"
                             onClick={() => {
                               const token = JSON.parse(
-                                localStorage.getItem("movie_token")
+                                localStorage.getItem("jwt_token")
                               );
                               if (auth && token) {
                                 dispatch(
@@ -162,7 +162,7 @@ const Home = () => {
                             className="flex gap-[5px] items-center "
                             onClick={() => {
                               const token = JSON.parse(
-                                localStorage.getItem("movie_token")
+                                localStorage.getItem("jwt_token")
                               );
                               if (auth && token) {
                                 dispatch(

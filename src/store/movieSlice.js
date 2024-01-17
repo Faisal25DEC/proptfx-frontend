@@ -15,6 +15,23 @@ export const getAllMovies = createAsyncThunk(
     }
   }
 );
+export const addMovie = createAsyncThunk(
+  "movies/addMovie",
+  async ({ values, token }) => {
+    try {
+      const res = await axios.post(`${baseUrl}/movies/add`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Movie added to database");
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+);
 
 export const updateWatchlist = createAsyncThunk(
   "movies/updateWatchlist",

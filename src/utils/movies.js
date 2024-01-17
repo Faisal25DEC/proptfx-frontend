@@ -1,3 +1,37 @@
+export const languages = [
+  "english",
+  "spanish",
+  "french",
+  "german",
+  "mandarin",
+  "hindi",
+  "arabic",
+  "portuguese",
+  "russian",
+  "japanese",
+  "korean",
+  "italian",
+  "dutch",
+  "turkish",
+  "polish",
+  "swedish",
+  "greek",
+  "hebrew",
+  "thai",
+  "vietnamese",
+  "tagalog",
+  "indonesian",
+  "malay",
+  "persian",
+  "swahili",
+  "bengali",
+  "punjabi",
+  "urdu",
+  "tamil",
+  "telugu",
+  "marathi",
+  // Add more languages as needed
+];
 export const checkWatchlist = (userId, movie) => {
   return movie?.likedBy?.includes(userId);
 };

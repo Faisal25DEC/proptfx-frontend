@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await axios.post(`${baseUrl}/users/login`, formData);
       console.log(res);
-      localStorage.setItem("movie_token", JSON.stringify(res.data.token));
+      localStorage.setItem("jwt_token", JSON.stringify(res.data.token));
       return res.data;
     } catch (error) {
       console.log(error);
@@ -55,7 +55,7 @@ export const userSlice = createSlice({
   },
   reducers: {
     logout: (state, action) => {
-      localStorage.removeItem("movie_token");
+      localStorage.removeItem("jwt_token");
       state.auth = false;
       state.currentUser = null;
     },
