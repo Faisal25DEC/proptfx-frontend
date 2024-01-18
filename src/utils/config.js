@@ -1,1 +1,1 @@
-export const baseUrl = `https://proptfx-backend.vercel.app`;
+export const baseUrl = `https://proptfx.onrender.com`;
