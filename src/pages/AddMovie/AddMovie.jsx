@@ -114,7 +114,7 @@ const AddMovie = () => {
       toast.error("Please enter vote_average between 0-5");
       return;
     }
-    const token = JSON.parse(localStorage.getItem("jwtToken"));
+    const token = JSON.parse(localStorage.getItem("jwt_token"));
     formData.vote_average = +formData.vote_average;
     formData.popularity = +formData.popularity;
     formData.vote_count = +formData.vote_count;
