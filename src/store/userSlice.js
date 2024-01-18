@@ -56,6 +56,7 @@ export const userSlice = createSlice({
   initialState: {
     signup: false,
     auth: false,
+
     currentUser: null,
     currentUserPending: false,
     currentUserError: false,
@@ -87,6 +88,7 @@ export const userSlice = createSlice({
         console.log("first");
         state.signup = false;
         state.auth = true;
+        toast.success("Login Successfull");
       })
       .addCase(signupUser.fulfilled, (state, action) => {
         state.signup = true;

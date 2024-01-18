@@ -35,8 +35,10 @@ const Navbar = () => {
               Register
             </button>
           </Link>
-
-          <button className="bg-red-500 py-2 px-4 rounded-xl ">Login</button>
+          <Link to="/login">
+            {" "}
+            <button className="bg-red-500 py-2 px-4 rounded-xl ">Login</button>
+          </Link>
         </div>
       )}
     </div>

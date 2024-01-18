@@ -158,25 +158,8 @@ const Home = () => {
                             <FaWindowClose /> Remove from watchlist
                           </div>
                         ) : (
-                          <div
-                            className="flex gap-[5px] items-center "
-                            onClick={() => {
-                              const token = JSON.parse(
-                                localStorage.getItem("jwt_token")
-                              );
-                              if (auth && token) {
-                                dispatch(
-                                  updateWatchlist({ movieId: item._id, token })
-                                );
-                              }
-                            }}
-                          >
-                            <FaClock /> Add to Watchlist
-                          </div>
-                        )}
-                        {!auth && (
                           <div className="flex gap-[5px] items-center ">
-                            <FaClock /> Add to Watchlist
+                            <FaClock /> Login to add to Watchlist
                           </div>
                         )}
                       </button>
