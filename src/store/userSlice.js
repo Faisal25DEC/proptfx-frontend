@@ -24,6 +24,7 @@ export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData) => {
     try {
+      toast.loading("Logging in user");
       const res = await axios.post(`${baseUrl}/users/login`, formData);
       console.log(res);
       localStorage.setItem("jwt_token", JSON.stringify(res.data.token));
@@ -39,9 +40,12 @@ export const signupUser = createAsyncThunk(
   "user/signupUser",
   async (formData) => {
     try {
+      toast.loading("Registering User");
       const res = await axios.post(`${baseUrl}/users/signup`, formData);
+      toast.success("Registered Successfully");
       return res.data;
     } catch (error) {
+      toast.error("Registeration failed");
       console.log(error);
     }
   }
